@@ -8,8 +8,8 @@ import com.mygdx.game.MyGdxGame
 fun main() {
     val config = Lwjgl3ApplicationConfiguration()
     config.setIdleFPS(60)
-    config.setTitle("Kotlin game")
-    config.setWindowedMode(1024, 900)
+    config.setTitle("Mario game")
+    config.setWindowedMode(1024, 700)
     Lwjgl3Application(MyGdxGame(), config)
 
 }

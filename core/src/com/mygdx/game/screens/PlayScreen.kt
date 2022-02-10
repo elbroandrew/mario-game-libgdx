@@ -4,19 +4,19 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.utils.viewport.StretchViewport
+import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.mygdx.game.MyGdxGame
+import com.mygdx.game.scenes.Hud
 
 class PlayScreen(var game: MyGdxGame) : Screen {
-    var texture: Texture = Texture("badlogic.jpg")
     private var gameCam: OrthographicCamera = OrthographicCamera()
-    private var gamePort: Viewport = StretchViewport(
-        1024f,
-        900f,
+    private var gamePort: Viewport = FitViewport(
+        MyGdxGame.V_WIDTH,
+        MyGdxGame.V_HEIGHT,
         gameCam
     )
+    var hud: Hud = Hud(game.batch)
 
     override fun show() {
 
@@ -26,11 +26,8 @@ class PlayScreen(var game: MyGdxGame) : Screen {
         Gdx.gl.glClearColor(1f, 0f, 0f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
-        game.batch.projectionMatrix = gameCam.combined
-        game.batch.begin()
-        game.batch.draw(texture, 0f, 0f)
-        game.batch.end()
-
+        game.batch.projectionMatrix = hud.stage.camera.combined
+        hud.stage.draw()
 
     }
 
