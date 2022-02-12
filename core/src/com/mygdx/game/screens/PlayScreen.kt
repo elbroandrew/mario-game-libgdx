@@ -48,8 +48,71 @@ class PlayScreen(var game: MyGdxGame) : Screen {
             (gamePort.worldHeight /2), 0f
         )
 
+        //create ground bricks/fixtures (that is on a ground layer of the map)
         for (obj:MapObject in map.layers.get(2).objects.getByType(RectangleMapObject::class.java)){
-            var rect:Rectangle = (obj as RectangleMapObject).rectangle
+            val rect:Rectangle = (obj as RectangleMapObject).rectangle
+
+            bDef.type = BodyDef.BodyType.StaticBody
+            bDef.position.set(
+                rect.getX() + rect.getWidth() / 2,
+                rect.getY() + rect.getHeight() / 2
+            )
+
+            body = world.createBody(bDef)
+            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2)
+            fdef.shape = shape
+            body.createFixture(fdef)
+
+        }
+
+        //create pipes
+        for (obj:MapObject in map.layers.get(3).objects.getByType(RectangleMapObject::class.java)){
+            val rect:Rectangle = (obj as RectangleMapObject).rectangle
+
+            bDef.type = BodyDef.BodyType.StaticBody
+            bDef.position.set(
+                rect.getX() + rect.getWidth() / 2,
+                rect.getY() + rect.getHeight() / 2
+            )
+
+            body = world.createBody(bDef)
+            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2)
+            fdef.shape = shape
+            body.createFixture(fdef)
+
+        }
+
+        //bricks
+        for (obj:MapObject in map.layers.get(5).objects.getByType(RectangleMapObject::class.java)){
+            val rect:Rectangle = (obj as RectangleMapObject).rectangle
+
+            bDef.type = BodyDef.BodyType.StaticBody
+            bDef.position.set(
+                rect.getX() + rect.getWidth() / 2,
+                rect.getY() + rect.getHeight() / 2
+            )
+
+            body = world.createBody(bDef)
+            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2)
+            fdef.shape = shape
+            body.createFixture(fdef)
+
+        }
+
+        //coins (layer 4)
+        for (obj:MapObject in map.layers.get(4).objects.getByType(RectangleMapObject::class.java)){
+            val rect:Rectangle = (obj as RectangleMapObject).rectangle
+
+            bDef.type = BodyDef.BodyType.StaticBody
+            bDef.position.set(
+                rect.getX() + rect.getWidth() / 2,
+                rect.getY() + rect.getHeight() / 2
+            )
+
+            body = world.createBody(bDef)
+            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2)
+            fdef.shape = shape
+            body.createFixture(fdef)
 
         }
     }
