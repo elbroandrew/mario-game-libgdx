@@ -5,17 +5,16 @@ import com.badlogic.gdx.Input
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.maps.MapObject
-import com.badlogic.gdx.maps.objects.RectangleMapObject
 import com.badlogic.gdx.maps.tiled.TiledMap
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer
-import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.physics.box2d.*
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
+import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.mygdx.game.MyGdxGame
+import com.mygdx.game.Tools.B2WorldCreator
 import com.mygdx.game.scenes.Hud
 import com.mygdx.game.sprites.Mario
 
@@ -38,90 +37,18 @@ class PlayScreen(private val game: MyGdxGame) : Screen {
     private var world:World = World(Vector2(0f, -10f ), true)
     private var b2dr:Box2DDebugRenderer = Box2DDebugRenderer()
 
-    var player: Mario = Mario(world)
-
-
-    //body
-    var bDef:BodyDef = BodyDef()
-    var shape:PolygonShape = PolygonShape()
-    var fdef:FixtureDef = FixtureDef()
-    lateinit var body:Body
-
+    private var player: Mario = Mario(world)
 
     init {
         gameCam.position.set(
-            (gamePort.worldWidth /2),
-            (gamePort.worldHeight /2), 0f
+            (gamePort.worldWidth / 2),
+            (gamePort.worldHeight / 2), 0f
         )
 
-        //create ground bricks/fixtures (that is on a ground layer of the map)
-        for (obj:MapObject in map.layers.get(2).objects.getByType(RectangleMapObject::class.java)){
-            val rect:Rectangle = (obj as RectangleMapObject).rectangle
-
-            bDef.type = BodyDef.BodyType.StaticBody
-            bDef.position.set(
-                (rect.getX() + rect.getWidth() / 2) / MyGdxGame.PPM,
-                (rect.getY() + rect.getHeight() / 2) / MyGdxGame.PPM
-            )
-
-            body = world.createBody(bDef)
-            shape.setAsBox(rect.getWidth()/2/MyGdxGame.PPM, rect.getHeight()/2/MyGdxGame.PPM)
-            fdef.shape = shape
-            body.createFixture(fdef)
-
-        }
-
-        //create pipes
-        for (obj:MapObject in map.layers.get(3).objects.getByType(RectangleMapObject::class.java)){
-            val rect:Rectangle = (obj as RectangleMapObject).rectangle
-
-            bDef.type = BodyDef.BodyType.StaticBody
-            bDef.position.set(
-                (rect.getX() + rect.getWidth() / 2) / MyGdxGame.PPM,
-                (rect.getY() + rect.getHeight() / 2) / MyGdxGame.PPM
-            )
-
-            body = world.createBody(bDef)
-            shape.setAsBox(rect.getWidth()/2/MyGdxGame.PPM, rect.getHeight()/2/MyGdxGame.PPM)
-            fdef.shape = shape
-            body.createFixture(fdef)
-
-        }
-
-        //bricks
-        for (obj:MapObject in map.layers.get(5).objects.getByType(RectangleMapObject::class.java)){
-            val rect:Rectangle = (obj as RectangleMapObject).rectangle
-
-            bDef.type = BodyDef.BodyType.StaticBody
-            bDef.position.set(
-                (rect.getX() + rect.getWidth() / 2) / MyGdxGame.PPM,
-                (rect.getY() + rect.getHeight() / 2) / MyGdxGame.PPM
-            )
-
-            body = world.createBody(bDef)
-            shape.setAsBox(rect.getWidth()/2/MyGdxGame.PPM, rect.getHeight()/2/MyGdxGame.PPM)
-            fdef.shape = shape
-            body.createFixture(fdef)
-
-        }
-
-        //coins (layer 4)
-        for (obj:MapObject in map.layers.get(4).objects.getByType(RectangleMapObject::class.java)){
-            val rect:Rectangle = (obj as RectangleMapObject).rectangle
-
-            bDef.type = BodyDef.BodyType.StaticBody
-            bDef.position.set(
-                (rect.getX() + rect.getWidth() / 2) / MyGdxGame.PPM,
-                (rect.getY() + rect.getHeight() / 2) / MyGdxGame.PPM
-            )
-
-            body = world.createBody(bDef)
-            shape.setAsBox(rect.getWidth()/2/MyGdxGame.PPM, rect.getHeight()/2/MyGdxGame.PPM)
-            fdef.shape = shape
-            body.createFixture(fdef)
-
-        }
+        B2WorldCreator(world, map)
     }
+
+
 
     private fun handleInput(dt: Float) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
