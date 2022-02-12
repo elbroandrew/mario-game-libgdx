@@ -123,7 +123,7 @@ class PlayScreen(private val game: MyGdxGame) : Screen {
         }
     }
 
-    fun handleInput(dt: Float) {
+    private fun handleInput(dt: Float) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
             player.b2body.applyLinearImpulse(Vector2(0f, 4f), player.b2body.worldCenter, true)
         }
@@ -136,9 +136,10 @@ class PlayScreen(private val game: MyGdxGame) : Screen {
         }
     }
 
-    fun update(dt: Float){
+    private fun update(dt: Float){
         handleInput(dt)
         world.step(1/60f, 6, 2)
+        gameCam.position.x = player.b2body.position.x
         gameCam.update()
         renderer.setView(gameCam)
 
