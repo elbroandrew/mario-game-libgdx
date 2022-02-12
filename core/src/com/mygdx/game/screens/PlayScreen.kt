@@ -9,6 +9,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject
 import com.badlogic.gdx.maps.tiled.TiledMap
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer
+import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.*
 import com.badlogic.gdx.utils.viewport.FitViewport
@@ -48,6 +49,7 @@ class PlayScreen(var game: MyGdxGame) : Screen {
         )
 
         for (obj:MapObject in map.layers.get(2).objects.getByType(RectangleMapObject::class.java)){
+            var rect:Rectangle = (obj as RectangleMapObject).rectangle
 
         }
     }
