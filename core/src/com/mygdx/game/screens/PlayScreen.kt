@@ -35,6 +35,7 @@ class PlayScreen(var game: MyGdxGame) : Screen {
     private var world:World = World(Vector2(0f, 0f), true)
     private var b2dr:Box2DDebugRenderer = Box2DDebugRenderer()
 
+
     //body
     var bDef:BodyDef = BodyDef()
     var shape:PolygonShape = PolygonShape()
@@ -143,6 +144,7 @@ class PlayScreen(var game: MyGdxGame) : Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
         renderer.render()
+        b2dr.render(world,gameCam.combined)
 
         game.batch.projectionMatrix = hud.stage.camera.combined
         hud.stage.draw()
