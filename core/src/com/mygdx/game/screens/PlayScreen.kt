@@ -16,8 +16,9 @@ import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.mygdx.game.MyGdxGame
 import com.mygdx.game.scenes.Hud
+import com.mygdx.game.sprites.Mario
 
-class PlayScreen(var game: MyGdxGame) : Screen {
+class PlayScreen(private val game: MyGdxGame) : Screen {
     private var gameCam: OrthographicCamera = OrthographicCamera()
     private var gamePort: Viewport = FitViewport(
         MyGdxGame.V_WIDTH,
@@ -34,6 +35,8 @@ class PlayScreen(var game: MyGdxGame) : Screen {
     //box2d
     private var world:World = World(Vector2(0f, 0f), true)
     private var b2dr:Box2DDebugRenderer = Box2DDebugRenderer()
+
+    //var player: Mario = Mario(this)
 
 
     //body
@@ -127,6 +130,7 @@ class PlayScreen(var game: MyGdxGame) : Screen {
 
     fun update(dt: Float){
         handleInput(dt)
+        world.step(1/60f, 6, 2)
         gameCam.update()
         renderer.setView(gameCam)
 
