@@ -25,13 +25,40 @@ class PlayScreen(var game: MyGdxGame) : Screen {
     private var map: TiledMap = mapLoader.load("level1.tmx")
     private var renderer: OrthogonalTiledMapRenderer = OrthogonalTiledMapRenderer(map)
 
+    init {
+        gameCam.position.set(
+            (gamePort.worldWidth /2),
+            (gamePort.worldHeight /2), 0f
+        )
+
+    }
+
+    fun handleInput(dt: Float) {
+        if (Gdx.input.isTouched){
+            gameCam.position.x += 50f * dt
+        }
+
+    }
+
+    fun update(dt: Float){
+        handleInput(dt)
+        gameCam.update()
+        renderer.setView(gameCam)
+
+    }
+
     override fun show() {
 
     }
 
-    override fun render(p0: Float) {
+    override fun render(deltaTime: Float) {
+
+        update(deltaTime)
+
         Gdx.gl.glClearColor(1f, 0f, 0f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
+
+        renderer.render()
 
         game.batch.projectionMatrix = hud.stage.camera.combined
         hud.stage.draw()
