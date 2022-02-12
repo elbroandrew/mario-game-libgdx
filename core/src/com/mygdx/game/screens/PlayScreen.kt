@@ -4,9 +4,13 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.maps.MapObject
+import com.badlogic.gdx.maps.objects.RectangleMapObject
 import com.badlogic.gdx.maps.tiled.TiledMap
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer
+import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.physics.box2d.*
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.mygdx.game.MyGdxGame
@@ -21,9 +25,21 @@ class PlayScreen(var game: MyGdxGame) : Screen {
     )
     var hud: Hud = Hud(game.batch)
 
+    //tile map
     private var mapLoader: TmxMapLoader = TmxMapLoader()
     private var map: TiledMap = mapLoader.load("level1.tmx")
     private var renderer: OrthogonalTiledMapRenderer = OrthogonalTiledMapRenderer(map)
+
+    //box2d
+    private var world:World = World(Vector2(0f, 0f), true)
+    private var b2dr:Box2DDebugRenderer = Box2DDebugRenderer()
+
+    //body
+    var bDef:BodyDef = BodyDef()
+    var shape:PolygonShape = PolygonShape()
+    var fdef:FixtureDef = FixtureDef()
+    lateinit var body:Body
+
 
     init {
         gameCam.position.set(
@@ -31,6 +47,9 @@ class PlayScreen(var game: MyGdxGame) : Screen {
             (gamePort.worldHeight /2), 0f
         )
 
+        for (obj:MapObject in map.layers.get(2).objects.getByType(RectangleMapObject::class.java)){
+
+        }
     }
 
     fun handleInput(dt: Float) {
