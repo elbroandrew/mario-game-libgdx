@@ -21,9 +21,9 @@ class PlayScreen(var game: MyGdxGame) : Screen {
     )
     var hud: Hud = Hud(game.batch)
 
-    private lateinit var mapLoader: TmxMapLoader
-    private lateinit var map: TiledMap
-    private lateinit var renderer: OrthogonalTiledMapRenderer
+    private var mapLoader: TmxMapLoader = TmxMapLoader()
+    private var map: TiledMap = mapLoader.load("level1.tmx")
+    private var renderer: OrthogonalTiledMapRenderer = OrthogonalTiledMapRenderer(map)
 
     override fun show() {
 
