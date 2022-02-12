@@ -1,6 +1,7 @@
 package com.mygdx.game.screens
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Input
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
@@ -37,7 +38,7 @@ class PlayScreen(private val game: MyGdxGame) : Screen {
     private var world:World = World(Vector2(0f, -10f ), true)
     private var b2dr:Box2DDebugRenderer = Box2DDebugRenderer()
 
-    //var player: Mario = Mario(this)
+    var player: Mario = Mario(world)
 
 
     //body
@@ -123,10 +124,16 @@ class PlayScreen(private val game: MyGdxGame) : Screen {
     }
 
     fun handleInput(dt: Float) {
-        if (Gdx.input.isTouched){
-            gameCam.position.x += 50f * dt
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+            player.b2body.applyLinearImpulse(Vector2(0f, 4f), player.b2body.worldCenter, true)
         }
-
+        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.linearVelocity.x <= 2)
+        {
+            player.b2body.applyLinearImpulse(Vector2(0.1f, 0f), player.b2body.worldCenter, true)
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.linearVelocity.x >= -2) {
+            player.b2body.applyLinearImpulse(Vector2(-0.1f, 0f), player.b2body.worldCenter, true)
+        }
     }
 
     fun update(dt: Float){
