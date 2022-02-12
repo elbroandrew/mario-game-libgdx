@@ -9,7 +9,7 @@ fun main() {
     val config = Lwjgl3ApplicationConfiguration()
     config.setIdleFPS(60)
     config.setTitle("Mario game")
-    config.setWindowedMode(1024, 700)
+    config.setWindowedMode(1200, 624)
     Lwjgl3Application(MyGdxGame(), config)
 
 }
