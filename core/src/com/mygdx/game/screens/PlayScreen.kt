@@ -19,10 +19,11 @@ import com.mygdx.game.scenes.Hud
 import com.mygdx.game.sprites.Mario
 
 class PlayScreen(private val game: MyGdxGame) : Screen {
+
     private var gameCam: OrthographicCamera = OrthographicCamera()
     private var gamePort: Viewport = FitViewport(
-        MyGdxGame.V_WIDTH,
-        MyGdxGame.V_HEIGHT,
+        MyGdxGame.V_WIDTH / MyGdxGame.PPM,
+        MyGdxGame.V_HEIGHT / MyGdxGame.PPM,
         gameCam
     )
     var hud: Hud = Hud(game.batch)
@@ -30,10 +31,10 @@ class PlayScreen(private val game: MyGdxGame) : Screen {
     //tile map
     private var mapLoader: TmxMapLoader = TmxMapLoader()
     private var map: TiledMap = mapLoader.load("level1.tmx")
-    private var renderer: OrthogonalTiledMapRenderer = OrthogonalTiledMapRenderer(map)
+    private var renderer: OrthogonalTiledMapRenderer = OrthogonalTiledMapRenderer(map, 1 / MyGdxGame.PPM)
 
     //box2d
-    private var world:World = World(Vector2(0f, 0f), true)
+    private var world:World = World(Vector2(0f, -10f ), true)
     private var b2dr:Box2DDebugRenderer = Box2DDebugRenderer()
 
     //var player: Mario = Mario(this)
@@ -58,12 +59,12 @@ class PlayScreen(private val game: MyGdxGame) : Screen {
 
             bDef.type = BodyDef.BodyType.StaticBody
             bDef.position.set(
-                rect.getX() + rect.getWidth() / 2,
-                rect.getY() + rect.getHeight() / 2
+                (rect.getX() + rect.getWidth() / 2) / MyGdxGame.PPM,
+                (rect.getY() + rect.getHeight() / 2) / MyGdxGame.PPM
             )
 
             body = world.createBody(bDef)
-            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2)
+            shape.setAsBox(rect.getWidth()/2/MyGdxGame.PPM, rect.getHeight()/2/MyGdxGame.PPM)
             fdef.shape = shape
             body.createFixture(fdef)
 
@@ -75,12 +76,12 @@ class PlayScreen(private val game: MyGdxGame) : Screen {
 
             bDef.type = BodyDef.BodyType.StaticBody
             bDef.position.set(
-                rect.getX() + rect.getWidth() / 2,
-                rect.getY() + rect.getHeight() / 2
+                (rect.getX() + rect.getWidth() / 2) / MyGdxGame.PPM,
+                (rect.getY() + rect.getHeight() / 2) / MyGdxGame.PPM
             )
 
             body = world.createBody(bDef)
-            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2)
+            shape.setAsBox(rect.getWidth()/2/MyGdxGame.PPM, rect.getHeight()/2/MyGdxGame.PPM)
             fdef.shape = shape
             body.createFixture(fdef)
 
@@ -92,12 +93,12 @@ class PlayScreen(private val game: MyGdxGame) : Screen {
 
             bDef.type = BodyDef.BodyType.StaticBody
             bDef.position.set(
-                rect.getX() + rect.getWidth() / 2,
-                rect.getY() + rect.getHeight() / 2
+                (rect.getX() + rect.getWidth() / 2) / MyGdxGame.PPM,
+                (rect.getY() + rect.getHeight() / 2) / MyGdxGame.PPM
             )
 
             body = world.createBody(bDef)
-            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2)
+            shape.setAsBox(rect.getWidth()/2/MyGdxGame.PPM, rect.getHeight()/2/MyGdxGame.PPM)
             fdef.shape = shape
             body.createFixture(fdef)
 
@@ -109,12 +110,12 @@ class PlayScreen(private val game: MyGdxGame) : Screen {
 
             bDef.type = BodyDef.BodyType.StaticBody
             bDef.position.set(
-                rect.getX() + rect.getWidth() / 2,
-                rect.getY() + rect.getHeight() / 2
+                (rect.getX() + rect.getWidth() / 2) / MyGdxGame.PPM,
+                (rect.getY() + rect.getHeight() / 2) / MyGdxGame.PPM
             )
 
             body = world.createBody(bDef)
-            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2)
+            shape.setAsBox(rect.getWidth()/2/MyGdxGame.PPM, rect.getHeight()/2/MyGdxGame.PPM)
             fdef.shape = shape
             body.createFixture(fdef)
 

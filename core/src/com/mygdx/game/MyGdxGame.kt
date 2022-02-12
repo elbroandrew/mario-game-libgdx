@@ -9,6 +9,7 @@ class MyGdxGame : Game() {
     companion object{
         val V_WIDTH = 400f
         val V_HEIGHT = 208f
+        val PPM = 100f
     }
 
     lateinit var  batch: SpriteBatch
