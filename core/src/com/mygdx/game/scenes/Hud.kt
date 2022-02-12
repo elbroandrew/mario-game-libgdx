@@ -7,11 +7,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.badlogic.gdx.utils.Disposable
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.mygdx.game.MyGdxGame
 
-class Hud(sb: SpriteBatch) {
+class Hud(sb: SpriteBatch) : Disposable {
 
     private var viewport: Viewport = FitViewport(
         MyGdxGame.V_WIDTH,
@@ -65,7 +66,9 @@ class Hud(sb: SpriteBatch) {
         stage.addActor(table)
     }
 
-
+    override fun dispose() {
+        stage.dispose()
+    }
 
 
 }

@@ -106,5 +106,10 @@ class PlayScreen(private val game: MyGdxGame) : Screen {
     }
 
     override fun dispose() {
+        map.dispose()
+        renderer.dispose()
+        world.dispose()
+        b2dr.dispose()
+        hud.dispose()
     }
 }
