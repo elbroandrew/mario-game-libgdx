@@ -83,6 +83,12 @@ class PlayScreen(private val game: MyGdxGame) : Screen {
         Gdx.gl.glClearColor(1f, 0f, 0f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
+        game.time += Gdx.graphics.deltaTime
+        game.shader.setUniformf("u_amount", 10.0f)
+        game.shader.setUniformf("u_speed", 0.5f)
+        game.shader.setUniformf("u_time", game.time)
+        game.batch.shader = game.shader
+
         renderer.render()
         b2dr.render(world,gameCam.combined)
 
